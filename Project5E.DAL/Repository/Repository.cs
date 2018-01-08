@@ -32,6 +32,7 @@ namespace Project5E.DAL.Repository
         {
             dbSet.Add(obj);
         }
+
         public void Update(T obj)
         {
             db.Entry(obj).State = EntityState.Modified;
@@ -43,7 +44,14 @@ namespace Project5E.DAL.Repository
         }
         public void Save()
         {
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
         protected virtual void Dispose(bool disposing)
         {

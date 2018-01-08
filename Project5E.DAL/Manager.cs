@@ -16,6 +16,7 @@ namespace Project5E.DAL
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key]
         public int ManagerID { get; set; }
 
         [Required]

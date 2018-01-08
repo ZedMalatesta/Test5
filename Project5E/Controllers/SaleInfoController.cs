@@ -3,23 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Project5E.DAL.Repository;
 using Project5E.DAL;
+using Project5E.DAL.Repository;
 
 namespace Project5E.Controllers
 {
-    public class ManagerController : Controller
+    public class SaleInfoController : Controller
     {
-        private IRepository<Manager> _repository = null;
+        private IRepository<SaleInfo> _repository = null;
 
-        public ManagerController()
+        public SaleInfoController()
         {
-            this._repository = new Repository<Manager>();
+            this._repository = new Repository<SaleInfo>();
         }
-
+        /*
         public ActionResult Index()
         {
             var employees = _repository.GetAll();
+            return View(employees);
+        }*/
+        
+        public ActionResult Index(int managerid)
+        {
+            var employees = _repository.GetAll().Where(x => x.ManagerID == managerid).Select(x => x);
             return View(employees);
         }
 
@@ -30,11 +36,11 @@ namespace Project5E.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Manager item)
+        public ActionResult Create(SaleInfo item)
         {
             if (ModelState.IsValid)
             {
-                item.ManagerID = _repository.GetAll().Last().ManagerID + 1;
+                item.SaleInfoID = _repository.GetAll().Last().SaleInfoID + 1;
                 _repository.Insert(item);
                 _repository.Save();
                 return RedirectToAction("Index");
@@ -53,17 +59,17 @@ namespace Project5E.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Manager employee)
+        public ActionResult Edit(SaleInfo item)
         {
             if (ModelState.IsValid)
             {
-                _repository.Update(employee);
+                _repository.Update(item);
                 _repository.Save();
                 return RedirectToAction("Index");
             }
             else
             {
-                return View(employee);
+                return View(item);
             }
         }
 

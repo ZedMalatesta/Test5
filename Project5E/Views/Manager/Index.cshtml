@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/_ViewStart.cshtml";
+
 }
 
 <h2>Index</h2>
@@ -21,7 +21,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ManagerName)
+            @Html.ActionLink(item.ManagerName, "Index", "SaleInfo", new { Managerid = item.ManagerID }, null) 
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ManagerID }) |
